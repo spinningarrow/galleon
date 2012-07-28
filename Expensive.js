@@ -1,4 +1,4 @@
-Expensive = new Meteor.Collection('expensive_data');
+Galleon = new Meteor.Collection('expensive_data');
 
 if (Meteor.is_client) {
 
@@ -19,7 +19,7 @@ if (Meteor.is_client) {
 	var listTags = function () {
 		var tags = [];
 
-		Expensive.find().forEach(function (data) {
+		Galleon.find().forEach(function (data) {
 			$.each(data.tags, function (index, value) {
 				($.inArray(value, tags) === -1) && tags.push(value);
 			});
@@ -43,7 +43,7 @@ if (Meteor.is_client) {
 					tags: $('#tags').val().split(' '),
 				};
 
-				Expensive.insert(data);
+				Galleon.insert(data);
 
 				$('#amount').val('');
 				$('#tags').val('');
@@ -67,7 +67,7 @@ if (Meteor.is_client) {
 	// Total (all time)
 	Template.main.total = function () {
 
-		var amounts = Expensive.find().map(function (data) {
+		var amounts = Galleon.find().map(function (data) {
 			return data.amount;
 		});
 
@@ -83,9 +83,7 @@ if (Meteor.is_client) {
 			start_date = new Date(current_year, current_month, 1),
 			end_date = new Date(current_year, current_month + 1, 1);
 
-		// var current_month = new Date().getMonth();
-
-		var amounts = Expensive.find({ 'date': { $gte: start_date , $lt: end_date } })
+		var amounts = Galleon.find({ 'date': { $gte: start_date , $lt: end_date } })
 						.map(function (data) { return data.amount; });
 
 		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
@@ -96,7 +94,7 @@ if (Meteor.is_client) {
 
 		var total = 0;
 
-		Expensive.find(function () {
+		Galleon.find(function () {
 			return (new Date(this.date)).getDate() === (new Date()).getDate() - 1;
 		}).forEach(function (data) {
 			total += data.amount;
@@ -117,7 +115,7 @@ if (Meteor.is_client) {
 			start_date = new Date(current_year, current_month, current_date),
 			end_date = new Date(current_year, current_month, current_date + 1),
 
-			amounts = Expensive.find({ 'date': { $gte: start_date , $lt: end_date } })
+			amounts = Galleon.find({ 'date': { $gte: start_date , $lt: end_date } })
 						.map(function (data) { return data.amount; });
 
 		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
@@ -131,7 +129,7 @@ if (Meteor.is_client) {
 		'click .tag': function () {
 
 			var id = $(event.target).parent('li').data('id'),
-				document = Expensive.findOne({ _id: id }),
+				document = Galleon.findOne({ _id: id }),
 				tags = document.tags;
 
 			var updated_tags = prompt('Enter updated tags (comma-separated) for \n$' + document.amount.toFixed(2) + ' spent on ' + new Date(document.date).toDateString() + ':', tags.join(', '));
@@ -141,7 +139,7 @@ if (Meteor.is_client) {
 				updated_tags = updated_tags.split(/,\s/);
 
 				if (!_.isEqual(updated_tags, tags)) { // is there a better way?
-					Expensive.update({ _id: id }, { $set: { tags: updated_tags } });
+					Galleon.update({ _id: id }, { $set: { tags: updated_tags } });
 				}
 			}
 
@@ -170,7 +168,7 @@ if (Meteor.is_client) {
 		};
 
 		// Get all the data from the database
-		var data = Expensive.find({}, {sort: {date: 1}}).fetch();
+		var data = Galleon.find({}, {sort: {date: 1}}).fetch();
 
 		// Add formatted amount to each data item
 		_.each(data, function (item) {
