@@ -1,0 +1,325 @@
+@baseFontFamily : 'Helvetica Neue', Helvetica, arial, sans-serif;
+@pageWidth: 400px;
+
+@steelBlue: #6bceea;
+@steelOrange: #ec9278;
+
+.clearfix() {
+
+	*zoom: 1;
+
+	&:before, &:after {
+		display: table;
+		content: "";
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+.transition(@transition) {
+  -webkit-transition: @transition;
+	 -moz-transition: @transition;
+	  -ms-transition: @transition;
+	   -o-transition: @transition;
+		  transition: @transition;
+}
+
+@defaultTransition: all 0.2s ease;
+
+// /////////////////////////////////////////////////////////////////////////////////////// //
+
+body {
+	background: url('http://subtlepatterns.com/patterns/square_bg.png') #f8f8f8;
+	font-family: @baseFontFamily;
+}
+
+.container {
+	background: #fff;
+	margin: 1em auto 1em;
+	padding: 5px 20px 20px;
+	width: @pageWidth;
+
+	p.lead {
+		color: #666;
+		font-size: 2em;
+	}
+}
+
+aside {
+	em {
+		color: #999;
+		font-style: normal;
+	}
+}
+
+header {
+	/*border-top: 1px solid #eee;*/
+	/*color: #999;*/
+	/*font-size: 0.8em;*/
+	margin: 2em auto 0;
+	width: @pageWidth;
+
+	h1 {
+		font-family: 'HelveticaNeue-UltraLight', @baseFontFamily;
+		font-size: 3em;
+		font-weight: normal;
+		margin: 0;
+
+		span {
+			font-family: 'HelveticaNeue-UltraLight', @baseFontFamily;
+		}
+	}
+}
+
+footer {
+	/*border-top: 1px solid #eee;*/
+	color: #999;
+	font-size: 0.8em;
+	margin: 0 auto;
+	width: @pageWidth;
+}
+
+// /////////////////////////////////////////////////////////////////////////////////////// //
+
+a {
+	color: @steelBlue;
+	.transition(@defaultTransition);
+
+	&:active {
+		color: @steelOrange;
+	}
+
+	&:hover {
+		color: darken(@steelBlue, 15%);
+	}
+}
+
+.btn-large {
+	background: #f9f9f9;
+	border: 2px solid #999;
+	border-radius: 4px;
+	color: #666;
+	cursor: pointer;
+	font-family: @baseFontFamily;
+	font-size: 0.8em;
+	margin-top: 1.5em;
+	.transition(@defaultTransition);
+
+	&:hover {
+		border-color: @steelBlue;
+	}
+
+	&:focus {
+		border-color: @steelOrange;
+		outline: none;
+	}
+}
+
+input {
+
+	&.input-mini {
+		width: 5em;
+	}
+
+	&.input-small {
+		width: 8em;
+	}
+
+	&.input-medium {
+		width: 11em;
+	}
+
+	&.input-blank {
+		border-color: #eee;
+		border-style: solid;
+		border-width: 0 0 1px 0;
+		color: #000;
+		font-family: @baseFontFamily;
+		font-size: 1em;
+		text-align: center;
+		.transition(@defaultTransition);
+
+		&:focus {
+			outline: none;
+			border-color: @steelBlue;
+		}
+	}
+}
+
+table {
+
+	border-collapse: collapse;
+	font-size: 0.9em;
+	max-width: 100%;
+	width: 100%;
+
+	td, th {
+		border-color: #e0e0e0;
+		border-style: solid;
+		padding: 0.5em 0.5em;
+		/*padding-left: 0.5em;*/
+		/*margin: 0;
+		padding: 0;*/
+
+		&.number {
+			text-align: right;
+		}
+	}
+
+	td {
+		border-width: 1px 0;
+	}
+
+	th {
+		border-width: 0;
+	}
+
+	&.table-details {
+
+		.date {
+			white-space: nowrap;
+		}
+
+		.list-amounts {
+
+			a:link {
+				border: 1px solid;
+				border-radius: 3px;
+				font-size: 0.9em;
+				line-height: 27px;
+				padding: 4px;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.tag {
+	background-color: #eee;
+	border: none;
+	border-radius: 3px;
+	color: #333;
+	cursor: default;
+	/*display: block;*/
+	/*float: left;*/
+	font-family: @baseFontFamily;
+	font-size: 0.9em;
+	/*height: auto !important;*/
+	margin: 2px;
+	padding: 4px;
+	text-align: center;
+	.transition(@defaultTransition);
+	/*width: auto !important;*/
+	/*min-width: 3em;*/
+	/*max-width: 7em;*/
+	width: 7em;
+
+	&:hover {
+		background-color: #e0e0e0;
+	}
+
+	&.editable {
+		background-color: #fff;
+	}
+}
+
+ul.unstyled {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		cursor: pointer;
+		margin: 0;
+		// padding: 1em;
+		// width: 25%;
+
+		/*&:hover {
+			background: #f9f9f9;
+		}*/
+
+		&.selected {
+			background: #ffc;
+		}
+	}
+}
+
+.list-details {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+
+	}
+}
+
+#yearly-details {
+
+	h2 {
+		small {
+			// background: #ffc;
+			font-weight: 100;
+			padding: 1px 3px;
+		}
+	}
+	.days {
+
+		& > li {
+			border-color: #eee;
+			border-style: solid;
+			border-width: 1px 0 0;
+			clear: both;
+			.clearfix();
+			padding: 0.5em;
+			.transition(background 0.1s ease);
+
+			&:hover {
+				background: darken(#fff, 2%);
+			}
+
+			hgroup {
+
+				.date {
+					display: block;
+					float: left;
+					font-size: 1em;
+					font-weight: normal;
+					margin: 0;
+					padding: 0;
+
+					i {
+						color: #999;
+						font-style: normal;
+					}
+				}
+
+				.day-total {
+					display: block;
+					float: right;
+					font-size: 0.9em;
+					margin: 0;
+					padding: 0;
+				}
+			}
+
+			&.collapsed hgroup {
+				// margin-bottom: 2em;
+			}
+
+			.items {
+				clear: both;
+				font-size: 0.9em;
+				display: none;
+				padding-top: 1em;
+
+				li {
+					// display: none;
+					line-height: 2em;
+				}
+			}
+		}
+	}
+}

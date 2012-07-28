@@ -1,0 +1,95 @@
+<head>
+  <title>Galleon</title>
+</head>
+
+<body>
+	<header>
+		<h1>Galleon</h1>
+	</header>
+
+	<div class="container" id="main-form">
+		{{> main}}
+	</div>
+
+	<div class="container" id="expense-details">
+		{{> view_details}}
+	</div>
+
+	<footer>
+		<p>Forged by <strong>spinningarrow</strong>.</p>
+	</footer>
+</body>
+
+<template name="main">
+	<p class="lead">
+		On <input type="date" class="input-blank input-small" id="date" name="date" value="{{date_today}}">, <br>
+		I spent <input type="number" class="input-blank input-mini" id="amount" name="amount" min="0" placeholder="amount" autofocus>
+		on <input type="text" class="input-blank input-medium" id="tags" name="tags" placeholder="tags (space-separated)">.
+		<button type="submit" class="submit btn-large">Submit</button>
+	</p>
+
+	<aside>
+		<p>Total <!-- $<strong>{{total}}</strong> <em>(all time)</em>,  -->$<strong>{{total_month}}</strong> <em>(this month)</em>, $<strong>{{total_today}}</strong> <em>(today)</em>. <a href="#" class="container-toggle" data-toggle="expense-details">Details</a> &raquo;</p>
+	</aside>
+</template>
+
+<template name="view_details">
+	<nav>
+		<p>&laquo; <a href="#" class="container-toggle" data-toggle="main-form">Back</a></p>
+	</nav>
+
+	<ul id="yearly-details" class="years unstyled">
+		{{#each grouped_data}}
+		<li>
+			<h1>{{year}}</h1>
+			<ul class="months unstyled">
+				{{#each data}}
+				<li>
+					<h2>{{month}} <small>/ ${{monthly_total}}</small></h2>
+					<ul class="days unstyled">
+						{{#each data}}
+						<li class="day-title">
+							<hgroup>
+								<h3 class="date">{{display_date}} <i>{{display_day}}</i></h3>
+								<h4 class="day-total">${{total}}</h4>
+							</hgroup>
+							<ul class="items unstyled">
+								{{#each data}}
+								<li data-id="{{_id}}">
+									$<strong>{{display_amount}}</strong>
+									{{#each tags}}
+										<span class="tag">{{.}}</span>
+									{{/each}}
+								</li>
+								{{/each}}
+							</ul>
+						</li>
+						{{/each}}
+					</ul>
+				</li>
+				{{/each}}
+			</ul>
+		</li>
+		{{/each}}
+	</ul>
+</template>
+
+<!-- <table>
+		<tr>
+			<th>Date</th>
+			<th>Amount</th>
+			<th>Tags</th>
+		</tr>
+		{{#each day2}}
+		<tr>
+			<td>{{date}}</td>
+			<td class="number">$<strong title="{{tags}}">{{amount}}</strong></td>
+			<td>
+				{{#each tags}}
+				<span class="tag">{{.}}</span>
+				<input type="text" class="tag" readonly value="{{.}}">
+				{{/each}}
+			</td>
+		</tr>
+		{{/each}}
+	</table> -->
