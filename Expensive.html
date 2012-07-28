@@ -29,7 +29,7 @@
 	</p>
 
 	<aside>
-		<p>Total <!-- $<strong>{{total}}</strong> <em>(all time)</em>,  -->$<strong>{{total_month}}</strong> <em>(this month)</em>, $<strong>{{total_today}}</strong> <em>(today)</em>. <a href="#" class="container-toggle" data-toggle="expense-details">Details</a> &raquo;</p>
+		<p>Total $<strong>{{total_month}}</strong> <em>(this month)</em>, $<strong>{{total_today}}</strong> <em>(today)</em>. <a href="#" class="container-toggle" data-toggle="expense-details">Details</a> &raquo;</p>
 	</aside>
 </template>
 
@@ -73,23 +73,3 @@
 		{{/each}}
 	</ul>
 </template>
-
-<!-- <table>
-		<tr>
-			<th>Date</th>
-			<th>Amount</th>
-			<th>Tags</th>
-		</tr>
-		{{#each day2}}
-		<tr>
-			<td>{{date}}</td>
-			<td class="number">$<strong title="{{tags}}">{{amount}}</strong></td>
-			<td>
-				{{#each tags}}
-				<span class="tag">{{.}}</span>
-				<input type="text" class="tag" readonly value="{{.}}">
-				{{/each}}
-			</td>
-		</tr>
-		{{/each}}
-	</table> -->

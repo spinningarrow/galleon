@@ -3,22 +3,11 @@ Expensive = new Meteor.Collection('expensive_data');
 if (Meteor.is_client) {
 
 	Meteor.startup(function () {
-
 		$('.container').hide().eq(0).show();
-
-		/*$('.container-toggle').bind('click', function (event) {
-			event.preventDefault();
-
-			var toggleElementID = '#' + $(this).data('toggle');
-			$(this).parents('.container').slideUp();
-			$(toggleElementID).slideDown();
-
-			console.log('clicked');
-			return false;
-		});*/
 	});
 
 	var toggleContainersHandler = function (event) {
+
 		event.preventDefault();
 
 		var toggleElementID = '#' + $(event.target).data('toggle');
@@ -42,31 +31,16 @@ if (Meteor.is_client) {
 	// ---- Main (home) Page ----
 	Template.main.events = {
 
-		/*'keyup #tags' : function (event) {
+		'click .container-toggle': toggleContainersHandler,
 
-			var typedTags = event.target.value.split(' ');
-			var currentTag = typedTags[typedTags.length - 1];
-			// console.log(currentTag);
-
-			currentTag && $.each(listTags(), function (index, value) {
-				if (value.indexOf(currentTag) === 0) {
-					console.log(value);
-					// event.target.value = value + event.target.value;
-					// return false;
-				}
-			});
-		},*/
-
-		'click .container-toggle' : toggleContainersHandler,
-
-		'click .submit' : function (event) {
+		'click .submit': function (event) {
 
 			if ($('#amount').val() && $('#tags').val()) {
 
 				var data = {
-					date : $('#date').val() ? new Date($('#date').val()) : new Date(),
-					amount : parseFloat($('#amount').val()),
-					tags : $('#tags').val().split(' '),
+					date: $('#date').val() ? new Date($('#date').val()) : new Date(),
+					amount: parseFloat($('#amount').val()),
+					tags: $('#tags').val().split(' '),
 				};
 
 				Expensive.insert(data);
@@ -98,14 +72,6 @@ if (Meteor.is_client) {
 		});
 
 		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
-/*
-		var total = 0;
-
-		Expensive.find().forEach(function (data) {
-			total += data.amount;
-		});
-
-		return total.toFixed(2);*/
 	};
 
 	// Total (current month)
@@ -123,16 +89,6 @@ if (Meteor.is_client) {
 						.map(function (data) { return data.amount; });
 
 		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
-
-		/*var total = 0;
-
-		Expensive.find(function () {
-			return (new Date(this.date)).getMonth() === (new Date()).getMonth();
-		}).forEach(function (data) {
-			total += data.amount;
-		});
-
-		return total.toFixed(2);*/
 	};
 
 	// Total (previous day)
@@ -165,33 +121,14 @@ if (Meteor.is_client) {
 						.map(function (data) { return data.amount; });
 
 		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
-
-		/*var total = 0;
-
-		Expensive.find(function () {
-
-			var date = new Date(this.date);
-			var today = new Date();
-			return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear(); // date comparison sucks
-		}).forEach(function (data) {
-			total += data.amount;
-		});
-
-		return total.toFixed(2);*/
 	};
 
 	// ---- Details Page ----
 	Template.view_details.events = {
 
-		'click .container-toggle' : toggleContainersHandler,
+		'click .container-toggle': toggleContainersHandler,
 
-		'click .tag' : function () {
-			/*$(event.target)
-				// .prop('readonly', false)
-				// .addClass('editable');
-				.hide()
-				.after('<input type="text" class="tag editable">')
-				.next().focus();*/
+		'click .tag': function () {
 
 			var id = $(event.target).parent('li').data('id'),
 				document = Expensive.findOne({ _id: id }),
@@ -211,95 +148,11 @@ if (Meteor.is_client) {
 			return false;
 		},
 
-		'blur input.tag' : function () {
-			$(event.target)
-				// .prop('readonly', true)
-				// .removeClass('editable');
-				.prev().show()
-					.next().remove();
-		},
+		'click .day-title': function () {
 
-		'click .day-title' : function () {
 			var $target = $(event.currentTarget);
-			// console.log($target.hasClass('day-title') || $target.parent().hasClass('.day-title'));
 			$target.toggleClass('collapsed').find('.items').slideToggle('fast');
 		}
-	};
-
-	/*Template.view_details.day = function () {
-		return Expensive.find();
-	};
-
-	Template.view_details.day2 = function () {
-
-		var result = [];
-
-		Expensive.find({}, {sort : {date : 1}}).forEach(function (data) {
-
-			var d = (new Date(data.date));
-
-			result.push({
-				date: d.getDate() + '/' +  (d.getMonth() + 1) + '/' + d.getFullYear(),
-				amount:  data.amount.toFixed(2),
-				tags: data.tags
-			});
-		});
-
-		return result;
-	};*/
-
-	Template.view_details.list_by_date = function () {
-
-		var grouped_data = {},
-			result = [];
-
-		// Group all the data by day
-		Expensive.find({}, {sort: {date: 1}}).forEach(function (data) {
-
-			var date_key = new Date(data.date).toDateString();
-
-			!grouped_data[date_key] && (grouped_data[date_key] = []);
-			data.amount = data.amount.toFixed(2); // format amount
-			grouped_data[date_key].push(data);
-		});
-
-		window.g_d = grouped_data;
-
-		// Convert to an array for templating, and include the sum for each day
-		for (var property in grouped_data) {
-
-			var amounts = grouped_data[property].map(function (data) {
-				return parseFloat(data.amount);
-			});
-
-			var total = amounts.reduce(function (memo, num) {
-				return memo + num;
-			}, 0);
-
-			result.push({
-				date: property,
-				total: total.toFixed(2),
-				list_data: grouped_data[property]
-			});
-		}
-
-		return result;
-
-		// moar groups
-		var rr = Expensive.find({}, {sort: {date: 1}}).fetch();
-		var q = _.groupBy(rr, function (d) { return new Date(d.date).getFullYear() });
-		_.each(q, function (value, key, list) {
-		  q[key] = _.groupBy(value, function (d) { return new Date(d.date).getMonth(); });
-		});
-		_.each(q, function (value, key, list) {
-		  _.each(value, function (v, k, l) {
-		    q[key][k] = _.groupBy(v, function (d) { return new Date(d.date).toDateString(); });
-		  });
-		});
-
-		window.qq = q;
-
-		return [q];
 	};
 
 	Template.view_details.grouped_data = function () {
@@ -381,50 +234,6 @@ if (Meteor.is_client) {
 
 		return result;
 	};
-
-	/*Template.hello.greeting = function () {
-		return "Welcome to Expensive!";
-	};
-
-	Template.hello.events = {
-
-		'click input' : function () {
-			// template data, if any, is available in 'this'
-			if (typeof console !== 'undefined')
-				console.log("You pressed the button");
-		}
-	};
-
-	// Colors
-	Template.color_list.colors = function () {
-		return Colors.find({}, { sort: { likes: -1, name: 1 } });
-	};
-
-	Template.color_list.events = {
-
-		'click button' : function () {
-			Colors.update(Session.get('session_color'), { $inc: { likes: 1 } });
-		}
-	};
-
-	Template.color_info.maybe_selected = function () {
-		return Session.equals('session_color', this._id) ? 'selected' : '';
-	};
-
-	Template.color_info.how_many = function () {
-
-		if (!this.likes) { return "no"; }
-		if (this.likes < 5) { return "a few"; }
-		if (this.likes < 20) { return "some"; }
-		return "a lot of";
-	};
-
-	Template.color_info.events = {
-
-		'click' : function () {
-			Session.set('session_color', this._id);
-		}
-	};*/
 }
 
 if (Meteor.is_server) {
