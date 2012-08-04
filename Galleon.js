@@ -33,21 +33,47 @@ if (Meteor.is_client) {
 
 		'click .container-toggle': toggleContainersHandler,
 
-		// Evaluate simple arithmetic for amounts (may cause deterioration in mental math skills)
+		// Check if amount is a number and also evaluate simple arithmetic for amounts
+		// (may cause deterioration in mental math skills)
 		'blur #amount': function (event) {
 
 			var $amount = $(event.target);
+			var amountVal = $amount.val();
+
+			// Reset if amount is empty
+			if (!amountVal) {
+				$amount.data('expression-value', '')
+					.removeClass('success error');
+				return;
+			}
+
+			// Parse for arithmetic if it isn't
 			var evalRegex = /^=((?:\d+(?:\.\d+)?)(?:(?:\d+(?:\.\d+)?[+\-*\/])+(?:\d+(?:\.\d+)?))?)$/;
-			var mathExpression = $amount.val().match(evalRegex);
+			var mathExpression = amountVal.match(evalRegex);
 
 			if (mathExpression) {
 
-				$amount.data('expression-value', mathExpression[0]);
-				$amount.val(eval(mathExpression[1]));
+				$amount.data('expression-value', mathExpression[0])
+					.val(eval(mathExpression[1]))
+					.removeClass('error')
+					.addClass('success');
+			}
+
+			else if (!isNaN(amountVal)) {
+
+				amountVal = Math.abs(amountVal);
+				$amount.data('expression-value', amountVal)
+					.val(amountVal)
+					.removeClass('error')
+					.addClass('success');
 			}
 
 			else {
-				$amount.data('expression-value', $amount.val());
+				$amount.data('expression-value', '')
+					.removeClass('success')
+					.addClass('error')
+					.select()
+					.focus();
 			}
 		},
 
@@ -61,26 +87,32 @@ if (Meteor.is_client) {
 
 		'click .submit': function (event) {
 
-			if ($('#amount').val() && $('#tags').val()) {
+			var $amount = $('#amount');
+			var $tags = $('#tags');
+			var amountVal = $amount.val();
+
+			if (amountVal && $tags.val()) {
 
 				var data = {
-					date: $('#date').val() ? new Date($('#date').val()) : new Date(),
-					amount: parseFloat($('#amount').val()),
-					tags: $('#tags').val().split(' '),
+					date: $('#date').val() ? new Date($('#date').val()).toISOString() : new Date().toISOString(),
+					amount: Math.abs(parseFloat(amountVal)),
+					tags: $tags.val().split(' '),
 				};
 
 				Galleon.insert(data);
 
-				$('#amount').val('');
-				$('#tags').val('');
+				// Reset values
+				$amount.val('');
+				$amount.data('expression-value', '');
+				$tags.val('');
 			}
 
 			else {
-				if (!$('#amount').val()) {
-					$('#amount').focus();
+				if (!amountVal) {
+					$amount.focus();
 				}
-				else if (!$('#tags').val()) {
-					$('#tags').focus();
+				else if (!$tags.val()) {
+					$tags.focus();
 				}
 			}
 		}

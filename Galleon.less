@@ -1,8 +1,11 @@
 @baseFontFamily : 'Helvetica Neue', Helvetica, arial, sans-serif;
 @pageWidth: 400px;
 
+@steelRed: #eb5a4c;
+@steelGreen: #33d152;
 @steelBlue: #6bceea;
 @steelOrange: #ec9278;
+
 
 .clearfix() {
 
@@ -144,6 +147,14 @@ input {
 		&:focus {
 			outline: none;
 			border-color: @steelBlue;
+		}
+
+		&.success {
+			border-color: @steelGreen;
+		}
+
+		&.error {
+			border-color: @steelRed;
 		}
 	}
 }
