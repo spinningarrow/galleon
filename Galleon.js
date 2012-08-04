@@ -33,6 +33,32 @@ if (Meteor.is_client) {
 
 		'click .container-toggle': toggleContainersHandler,
 
+		// Evaluate simple arithmetic for amounts (may cause deterioration in mental math skills)
+		'blur #amount': function (event) {
+
+			var $amount = $(event.target);
+			var evalRegex = /^=((?:\d+(?:\.\d+)?)(?:(?:\d+(?:\.\d+)?[+\-*\/])+(?:\d+(?:\.\d+)?))?)$/;
+			var mathExpression = $amount.val().match(evalRegex);
+
+			if (mathExpression) {
+
+				$amount.data('expression-value', mathExpression[0]);
+				$amount.val(eval(mathExpression[1]));
+			}
+
+			else {
+				$amount.data('expression-value', $amount.val());
+			}
+		},
+
+		'focus #amount': function (event) {
+
+			var $amount = $(event.target);
+			if ($amount.data('expression-value')) {
+				$amount.val($amount.data('expression-value'));
+			}
+		},
+
 		'click .submit': function (event) {
 
 			if ($('#amount').val() && $('#tags').val()) {
