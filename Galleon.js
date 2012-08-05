@@ -95,7 +95,7 @@ if (Meteor.is_client) {
 
 				var data = {
 					date: $('#date').val() ? new Date($('#date').val()).toISOString() : new Date().toISOString(),
-					amount: Math.abs(parseFloat(amountVal)),
+					amount: Math.abs(+amountVal),
 					tags: $tags.val().split(' '),
 				};
 
@@ -266,10 +266,10 @@ if (Meteor.is_client) {
 		var monthly_data = _.map(months_group, function (value, key, list) {
 			var matches = key.match(/(\d{1,2})\/(\d{4})/);
 			return {
-				month: months[parseInt(matches[1], 10)],
-				year: parseInt(matches[2], 10),
+				month: months[+matches[1]],
+				year: +matches[2],
 				data: value,
-				monthly_total: _.reduce(value, function (memo, num) { return memo + parseFloat(num.total); }, 0).toFixed(2)
+				monthly_total: _.reduce(value, function (memo, num) { return memo + (+num.total); }, 0).toFixed(2)
 			}
 		});
 
@@ -286,7 +286,7 @@ if (Meteor.is_client) {
 			}
 		});
 
-		window.yd = result;
+		window.yd = result; // debug
 
 		return result;
 	};
