@@ -48,7 +48,7 @@ if (Meteor.is_client) {
 			}
 
 			// Parse for arithmetic if it isn't
-			var evalRegex = /^=((?:\d+(?:\.\d+)?|(?:\.\d+))(?:[+-](?:\d+(?:\.\d+)?|(?:\.\d+)))?)$/;
+			var evalRegex = /^=((?:\d+(?:\.\d+)?|(?:\.\d+))(?:[+-](?:\d+(?:\.\d+)?|(?:\.\d+)))*)$/;
 			var mathExpression = amountVal.match(evalRegex);
 
 			if (mathExpression) {
@@ -183,6 +183,10 @@ if (Meteor.is_client) {
 	Template.view_details.events = {
 
 		'click .container-toggle': toggleContainersHandler,
+
+		'click .months h2': function () {
+			$(event.target).next('.days').slideToggle();
+		},
 
 		'click .tag': function () {
 
