@@ -276,7 +276,7 @@ if (Meteor.is_client) {
 				data: value,
 				monthly_total: _.reduce(value, function (memo, num) { return memo + (+num.total); }, 0).toFixed(2)
 			}
-		});
+		}).reverse();
 
 		// Group by year
 		var years_group = _.groupBy(monthly_data, function (item) {
