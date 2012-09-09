@@ -102,8 +102,9 @@ if (Meteor.is_client) {
 				Galleon.insert(data);
 
 				// Reset values
-				$amount.val('');
-				$amount.data('expression-value', '');
+				$amount.val('')
+					.data('expression-value', '')
+					.removeClass('success');
 				$tags.val('');
 			}
 
