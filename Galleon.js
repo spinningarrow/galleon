@@ -29,7 +29,7 @@ if (Meteor.is_client) {
 	};
 
 	// ---- Main (home) Page ----
-	Template.main.events = {
+	Template.main.events({
 
 		'click .container-toggle': toggleContainersHandler,
 
@@ -117,7 +117,7 @@ if (Meteor.is_client) {
 				}
 			}
 		}
-	};
+	});
 
 	Template.main.date_today = function () {
 		return new Date().toISOString().split("T")[0]; // looks hacky, but works so whatever
@@ -181,7 +181,7 @@ if (Meteor.is_client) {
 	};
 
 	// ---- Details Page ----
-	Template.view_details.events = {
+	Template.view_details.events({
 
 		'click .container-toggle': toggleContainersHandler,
 
@@ -214,7 +214,7 @@ if (Meteor.is_client) {
 			var $target = $(event.currentTarget);
 			$target.toggleClass('collapsed').find('.items').slideToggle('fast');
 		}
-	};
+	});
 
 	Template.view_details.grouped_data = function () {
 
