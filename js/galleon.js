@@ -96,7 +96,7 @@ if (Meteor.is_client) {
 				var data = {
 					date: $('#date').val() ? new Date($('#date').val()).toISOString() : new Date().toISOString(),
 					amount: Math.abs(+amountVal),
-					tags: $tags.val().split(' ')
+					tags: $tags.val().trim().split(/\s+/)
 				};
 
 				Galleon.insert(data);
