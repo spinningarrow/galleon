@@ -23,7 +23,7 @@ if (Meteor.is_client) {
 			$.each(data.tags, function (index, value) {
 				($.inArray(value, tags) === -1) && tags.push(value);
 			});
-		})
+		});
 
 		return tags.sort();
 	};
@@ -96,7 +96,7 @@ if (Meteor.is_client) {
 				var data = {
 					date: $('#date').val() ? new Date($('#date').val()).toISOString() : new Date().toISOString(),
 					amount: Math.abs(+amountVal),
-					tags: $tags.val().split(' '),
+					tags: $tags.val().split(' ')
 				};
 
 				Galleon.insert(data);
@@ -130,7 +130,7 @@ if (Meteor.is_client) {
 			return data.amount;
 		});
 
-		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
+		return amounts.reduce(function (memo, num) { return memo + num; }, 0).toFixed(2);
 	};
 
 	// Total (current month)
@@ -145,7 +145,7 @@ if (Meteor.is_client) {
 		var amounts = Galleon.find({ 'date': { $gte: start_date , $lt: end_date } })
 						.map(function (data) { return data.amount; });
 
-		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
+		return amounts.reduce(function (memo, num) { return memo + num; }, 0).toFixed(2);
 	};
 
 	// Total (previous day)
@@ -177,7 +177,7 @@ if (Meteor.is_client) {
 			amounts = Galleon.find({ 'date': { $gte: start_date , $lt: end_date } })
 						.map(function (data) { return data.amount; });
 
-		return amounts.reduce(function (memo, num) { return memo + num }, 0).toFixed(2);
+		return amounts.reduce(function (memo, num) { return memo + num; }, 0).toFixed(2);
 	};
 
 	// ---- Details Page ----
@@ -258,7 +258,7 @@ if (Meteor.is_client) {
 				display_date: date,
 				total: _.reduce(value, function (memo, num) { return memo + num.amount; }, 0).toFixed(2),
 				data: value
-			}
+			};
 		});
 
 		// Group by month
@@ -275,7 +275,7 @@ if (Meteor.is_client) {
 				year: +matches[2],
 				data: value,
 				monthly_total: _.reduce(value, function (memo, num) { return memo + (+num.total); }, 0).toFixed(2)
-			}
+			};
 		}).reverse();
 
 		// Group by year
@@ -288,7 +288,7 @@ if (Meteor.is_client) {
 			return {
 				year: key,
 				data: value
-			}
+			};
 		});
 
 		window.yd = result; // debug
