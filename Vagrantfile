@@ -108,4 +108,7 @@ Vagrant.configure("2") do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+
+  # Provision using external shell script
+  config.vm.provision :shell, :path => "vagrant_provision.sh"
 end
