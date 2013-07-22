@@ -1,0 +1,81 @@
+<head>
+	<title>galleon</title>
+</head>
+
+<body>
+	{{> home}}
+</body>
+
+<template name="home">
+
+	{{#if currentUser}}
+		Hello, how are you?
+
+		{{> create}}
+
+		{{> details}}
+	{{else}}
+		{{loginButtons}}
+	{{/if}}
+</template>
+
+<template name="create">
+	<form id="form-create">
+		<input type="date" class="" id="date" value="{{todayDate}}">
+		<input type="number" class="" id="amount" placeholder="amount" autofocus>
+		<input type="text" class="" id="tags" placeholder="tags (space-separated)">
+
+		<button type="submit" class="btn">Submit</button>
+	</form>
+</template>
+
+<template name="details">
+	<!-- <nav>
+		<p>&laquo; <a href="#" class="container-toggle" data-toggle="main-form">Back</a></p>
+	</nav> -->
+
+	{{#each data}}
+	<li data-id="{{_id}}">
+		{{date}}
+		<strong>{{value}}</strong>
+		{{#each tags}}
+			<span class="tag">{{.}}</span>
+		{{/each}}
+	</li>
+	{{/each}}
+
+	<!-- <ul id="yearly-details" class="years unstyled">
+		{{#each grouped_data}}
+		<li>
+			<h1>{{year}}</h1>
+			<ul class="months unstyled">
+				{{#each data}}
+				<li>
+					<h2>{{month}} <small>/ ${{monthly_total}}</small></h2>
+					<ul class="days unstyled">
+						{{#each data}}
+						<li class="day-title">
+							<hgroup>
+								<h3 class="date">{{display_date}} <i>{{display_day}}</i></h3>
+								<h4 class="day-total">${{total}}</h4>
+							</hgroup>
+							<ul class="items unstyled">
+								{{#each data}}
+								<li data-id="{{_id}}">
+									$<strong>{{display_amount}}</strong>
+									{{#each tags}}
+										<span class="tag">{{.}}</span>
+									{{/each}}
+								</li>
+								{{/each}}
+							</ul>
+						</li>
+						{{/each}}
+					</ul>
+				</li>
+				{{/each}}
+			</ul>
+		</li>
+		{{/each}}
+	</ul> -->
+</template>
