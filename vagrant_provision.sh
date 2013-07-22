@@ -2,4 +2,4 @@
 apt-get --assume-yes install git curl
 
 # Meteor
-curl https://install.meteor.com | /bin/sh
+curl --silent --show-error https://install.meteor.com | /bin/sh
