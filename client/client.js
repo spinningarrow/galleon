@@ -233,6 +233,16 @@ Template.details.events({
 		editElement.className = _.without(editElement.className.split(' '), 'hidden').join(' ')
 	},
 
+	'reset .expenditure-item-edit-form': function (event, template) {
+		var displayElement = template.find('#' + this._id + ' .expenditure-item-display')
+		var editElement = template.find('#' + this._id + ' .expenditure-item-edit')
+
+		editElement.className += ' hidden'
+
+		// Twirly 'removeClass' implementation
+		displayElement.className = _.without(displayElement.className.split(' '), 'hidden').join(' ')
+	},
+
 	'submit .expenditure-item-edit-form': function (event, template) {
 		var displayElement = template.find('#' + this._id + ' .expenditure-item-display')
 		var editElement = template.find('#' + this._id + ' .expenditure-item-edit')
@@ -242,6 +252,28 @@ Template.details.events({
 		// Twirly 'removeClass' implementation
 		displayElement.className = _.without(displayElement.className.split(' '), 'hidden').join(' ')
 
-		return false
+		// Get form values
+		var date = template.find('#' + this._id + ' .expenditure-item-edit-date').value
+		var value = +template.find('#' + this._id + ' .expenditure-item-edit-value').value
+		var tags = template.find('#' + this._id + ' .expenditure-item-edit-tags').value
+
+		// if (value && tags) {
+
+			date = date ? new Date(date) : new Date()
+			tags = tags.trim().split(/\s*,\s*/)
+
+			// Reset values
+			// template.find('#amount').value = ''
+			// template.find('#tags').value = ''
+
+			// Update data
+			Expenditures.update({ _id: this._id }, { $set: {
+					date: date,
+					value: value,
+					tags: tags
+				}
+			})
+
+		return false // don't actually submit the form
 	}
 })
