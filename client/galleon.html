@@ -45,18 +45,18 @@
 	{{/each}}
 
 	<br> <br>
-	{{#dataByMonth data}}
+	{{#groupByMonth expenditures}}
 
 		<em>{{date}}</em><br>
 
-		{{#dataByDay expenditures}}
+		{{#groupByDay monthlyExpenditures}}
 			<strong>{{date}}</strong>
-			{{#each expenditures}}
+			{{#each dailyExpenditures}}
 				<li>{{value}}</li>
 			{{/each}}
-		{{/dataByDay}}
+		{{/groupByDay}}
 
-	{{/dataByMonth}}
+	{{/groupByMonth}}
 
 	<!-- July 2013
 	22
