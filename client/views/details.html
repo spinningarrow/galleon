@@ -1,5 +1,5 @@
 <template name="details">
-	<h2>All Data</h2>
+	<div style="display: none"><h2>All Data</h2>
 
 	{{#each expenditures}}
 	<li data-id="{{_id}}">
@@ -9,30 +9,39 @@
 			<span class="tag">{{.}}</span>
 		{{/each}}
 	</li>
-	{{/each}}
+	{{/each}}</div>
 
-	<h2>Details</h2>
-	<input type="text" id="tag-search" value="{{tagSearchQuery}}" placeholder="(filter by tag)">
+	<header class="template-details-header">
+		<h1>Details</h1>
+		<input type="text" id="tag-search" value="{{tagSearchQuery}}" placeholder="(filter by tag)">
+	</header>
 
-	<p>Total {{totalAmount expenditures}} (all time)</p>
+	<!-- <p>Total {{totalAmount expenditures}} (all time)</p> -->
 
 	<ul>
 	{{#groupByMonth findByTag tagSearchQuery expenditures}}
 		<li>
-			<h2>{{formatDate 'MONTH_YEAR' date}} {{totalAmount monthlyExpenditures}}</h2>
+			<h2>
+				{{formatDate 'MONTH_YEAR' date}}
+				<span class="expenditure-amount">{{totalAmount monthlyExpenditures}}</span>
+			</h2>
 
 			<ul>
 			{{#groupByDay monthlyExpenditures}}
-				<li>
-					<h3>{{formatDate 'DATE' date}} {{formatDate 'DAY' date}} {{totalAmount dailyExpenditures}}</h3>
+				<li class="expenditure-item">
+					<h3 class="expenditure-date">
+						{{formatDate 'DATE' date}}
+						<i>{{formatDate 'DAY' date}}</i>
+						<span class="expenditure-amount">{{totalAmount dailyExpenditures}}</span>
+					</h3>
 
 					<ul>
 					{{#each dailyExpenditures}}
 						<li>
-							{{formatAmount value currency}}
 							{{#each tags}}
-								<span>{{this}}</span>
+								<span class="expenditure-tag">{{this}}</span>
 							{{/each}}
+							<span class="expenditure-amount">{{formatAmount value currency}}</span>
 						</li>
 					{{/each}}
 					</ul>
@@ -43,7 +52,7 @@
 	{{/groupByMonth}}
 	</ul>
 
-	<h2>Tags</h2>
+	<div style="display: none"><h2>Tags</h2>
 
 	{{#each tagsWithCount}}
 		{{name}}({{count}})
@@ -52,5 +61,5 @@
 			{{value}}
 		{{/each}}
 		<br>
-	{{/each}}
+	{{/each}}</div>
 </template>
