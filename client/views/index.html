@@ -1,0 +1,10 @@
+<template name="index">
+
+	{{loginButtons}}
+
+	{{#if currentUser}}
+		{{> create}}
+
+		{{> details}}
+	{{/if}}
+</template>
