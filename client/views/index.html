@@ -1,7 +1,23 @@
 <template name="index">
-	{{#if currentUser}}
-		{{> create}}
+	<header class="site-header">
+		<h1>Galleon</h1>
+		<nav>
+			<a href="#" class="show-create">Add</a>
+			<a href="#" class="show-details">Details</a>
 
-		{{> details}}
-	{{/if}}
+			{{loginButtons align="right"}}
+		</nav>
+	</header>
+
+	<section class="wrapper">
+		{{#if currentUser}}
+			<section class="template-create">
+				{{> create}}
+			</section>
+
+			<section class="template-details hidden">
+				{{> details}}
+			</section>
+		{{/if}}
+	</section>
 </template>
