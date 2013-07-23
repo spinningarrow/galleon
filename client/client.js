@@ -108,10 +108,11 @@ Template.details.formatAmount = function (amount, currency) {
 }
 
 // Return the total amount for an array of expenditures
+// TODO check currency of data objects
 Template.details.totalAmount = function (data) {
 	return _.reduce(data, function (memo, item) {
 		return memo + item.value
-	}, 0)
+	}, 0).toFixed(2)
 }
 
 Template.details.tagsWithCount = function () {
