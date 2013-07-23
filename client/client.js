@@ -199,3 +199,15 @@ Template.details.groupByDay = function (context, options) {
 
 	return ret
 }
+
+// Tag search asfh
+Template.details.tagSearchQuery = function () {
+	return Session.get('tagSearchQuery')
+}
+
+Template.details.events({
+
+	'keyup #tag-search': function (event, template) {
+		Session.set('tagSearchQuery', template.find('#tag-search').value)
+	}
+})
