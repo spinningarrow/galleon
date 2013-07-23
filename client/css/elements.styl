@@ -28,12 +28,31 @@
 		display inline-block
 		vertical-align text-bottom
 
-.expenditure-item
+.expenditure-group-day
 	border-top 1px solid #f0f0f0
 	padding 0.5em
 
 	&:hover
 		background-color #fcfcfc
+
+.expenditure-item-display:hover:before
+		color gray
+		content '✎'
+		display inline-block
+		margin-left -1em
+		width 1em
+
+.expenditure-item-edit
+	font-size 0.7em
+
+	.expenditure-item-edit-date
+		width 35%
+
+	.expenditure-item-edit-value
+		width 15%
+
+	.expenditure-item-edit-tags
+		width 30%
 
 .expenditure-date
 	font-size 1em
