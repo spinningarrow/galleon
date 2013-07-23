@@ -139,22 +139,30 @@ Template.details.tagsWithCount = function () {
 	return result
 }
 
-Template.details.findByTag = function (tag) {
-
-	// TODO Use data passed in!!!!
-	var data = Expenditures.find().fetch()
+Template.details.findByTag = function (tag, data) {
+	if (!tag) {
+		return data
+	}
 
 	return _.filter(data, function (item) {
 		return _.indexOf(item.tags, tag) !== -1
 	})
-
-
 }
 
 // Group expenditure data by month
 // Returns an array of objects having a 'date' and a list of expenditures
 // for that month
 Template.details.groupByMonth = function (context, options) {
+
+	// Fix for bug that was causing groupByMonth to be called with context
+	// as an object with a 'hash' property when the tag search input box is
+	// cleared (looks like this function is called every time the search input
+	// changes once before going into findByTag [causing the error] and once
+	// after)
+	if (!_.isArray(context)) {
+		return ''
+	}
+
 	var ret = ''
 	var result = []
 

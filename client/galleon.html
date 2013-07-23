@@ -40,11 +40,12 @@
 	{{/each}}
 
 	<h2>Details</h2>
+	<input type="text" id="tag-search" value="{{tagSearchQuery}}" placeholder="(filter by tag)">
 
 	<p>Total {{totalAmount expenditures}} (all time)</p>
 
 	<ul>
-	{{#groupByMonth expenditures}}
+	{{#groupByMonth findByTag tagSearchQuery expenditures}}
 		<li>
 			<h2>{{formatDate 'MONTH_YEAR' date}} {{totalAmount monthlyExpenditures}}</h2>
 
@@ -80,13 +81,4 @@
 		{{/each}}
 		<br>
 	{{/each}}
-
-	<h2>Tag Search</h2>
-	<input type="text" id="tag-search" value="{{tagSearchQuery}}">
-	<input type="submit" id="submit-tag-search" value="Search!">
-	<br><br>
-	<!-- This does not work: {totalAmount findBytag tagSearchQuery} -->
-	{{#groupByMonth findByTag tagSearchQuery}}
-		<li>{{formatDate 'MONTH_YEAR' date}}: {{totalAmount monthlyExpenditures}}</li>
-	{{/groupByMonth}}
 </template>
