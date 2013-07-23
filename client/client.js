@@ -58,18 +58,66 @@ Template.create.events({
 // Template: Details
 //--------------------------------------------------------------------
 
-// Date helper
-Template.details.formatDate = function (date) {
-	return new Date(date)/*.toDateString()*/;
+// Return all data for the current user
+Template.details.expenditures = function () {
+	return Expenditures.find({}, { sort: { date: -1 } }).fetch()
 }
 
+// Helper for formatting dates
+Template.details.formatDate = function (format, date) {
+	var months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	]
+
+	var days = [
+		'Monday',
+		'Tuesday',
+		'Wednesday',
+		'Thursday',
+		'Friday',
+		'Saturday',
+		'Sunday'
+	]
+
+	switch (format) {
+		case 'MONTH_YEAR':
+			return months[date.getMonth()] + ' ' + date.getFullYear()
+
+		case 'DAY':
+			return days[date.getDay()]
+
+		case 'DATE':
+			return date.getDate()
+	}
+}
+
+// Helper for formatting amounts (e.g., '10.00 SGD')
 Template.details.formatAmount = function (amount, currency) {
 	return amount.toFixed(2) + ' ' + currency
 }
 
-Template.details.groupByMonth = function (context, options) {
-	// context - array of all expenditure data
+// Return the total amount for an array of expenditures
+Template.details.totalAmount = function (data) {
+	return _.reduce(data, function (memo, item) {
+		return memo + item.value
+	}, 0)
+}
 
+// Group expenditure data by month
+// Returns an array of objects having a 'date' and a list of expenditures
+// for that month
+Template.details.groupByMonth = function (context, options) {
 	var ret = ''
 	var result = []
 
@@ -91,9 +139,10 @@ Template.details.groupByMonth = function (context, options) {
 	return ret
 }
 
+// Group expenditure data by day
+// Returns an array of objects having a 'date' and a list of expenditures
+// for that day
 Template.details.groupByDay = function (context, options) {
-	// context - array of expenditure data (could be all exp, exp for a month, etc)
-
 	var ret = ''
 	var result = []
 
@@ -113,12 +162,4 @@ Template.details.groupByDay = function (context, options) {
 	})
 
 	return ret
-}
-
-Template.details.expenditures = function () {
-	return Expenditures.find({}, { sort: { date: -1 } }).fetch()
-}
-
-Template.details.data = function () {
-	return Expenditures.find({}, { sort: { date: -1 } }).fetch()
 }

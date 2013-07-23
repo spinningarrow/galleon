@@ -34,9 +34,9 @@
 		<p>&laquo; <a href="#" class="container-toggle" data-toggle="main-form">Back</a></p>
 	</nav> -->
 
-	{{#each data}}
+	{{#each expenditures}}
 	<li data-id="{{_id}}">
-		{{formatDate date}}
+		{{date}}
 		<strong>{{formatAmount value currency}}</strong>
 		{{#each tags}}
 			<span class="tag">{{.}}</span>
@@ -47,30 +47,18 @@
 	<br> <br>
 	{{#groupByMonth expenditures}}
 
-		<em>{{date}}</em><br>
+		<em>{{formatDate 'MONTH_YEAR' date}}</em><br>
+		Total: {{totalAmount monthlyExpenditures}}<br>
 
 		{{#groupByDay monthlyExpenditures}}
-			<strong>{{date}}</strong>
+			<strong>{{formatDate 'DATE' date}} {{formatDate 'DAY' date}}</strong><br>
+			Total: {{totalAmount dailyExpenditures}}
 			{{#each dailyExpenditures}}
 				<li>{{value}}</li>
 			{{/each}}
 		{{/groupByDay}}
 
 	{{/groupByMonth}}
-
-	<!-- July 2013
-	22
-		clothes 10
-		monkey 2
-	21
-		bone 12
-
-	May 2013
-	10
-		misc 20
-	9
-		towel 10
-		baseball 10 -->
 
 	<!-- <ul id="yearly-details" class="years unstyled">
 		{{#each grouped_data}}
