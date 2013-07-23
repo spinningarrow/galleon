@@ -67,6 +67,54 @@ Template.details.formatAmount = function (amount, currency) {
 	return amount.toFixed(2) + ' ' + currency
 }
 
+Template.details.dataByMonth = function (context, options) {
+	// context - array of all expenditure data
+
+	var ret = ''
+	var result = []
+
+	var groupedData = _.groupBy(context, function (item) {
+		return item.date.getFullYear() + '-' + (item.date.getMonth() + 1)
+	})
+
+	_.each(groupedData, function (value, key) {
+		result.push({
+			date: new Date(key),
+			expenditures: value
+		})
+	})
+
+	_.each(result, function (element) {
+		ret = ret + options.fn(element)
+	})
+
+	return ret
+}
+
+Template.details.dataByDay = function (context, options) {
+	// context - array of expenditure data (could be all exp, exp for a month, etc)
+
+	var ret = ''
+	var result = []
+
+	var groupedData = _.groupBy(context, function (item) {
+		return item.date.toDateString()
+	})
+
+	_.each(groupedData, function (value, key) {
+		result.push({
+			date: new Date(key),
+			expenditures: value
+		})
+	})
+
+	_.each(result, function (element) {
+		ret = ret + options.fn(element)
+	})
+
+	return ret
+}
+
 Template.details.data = function () {
 	return Expenditures.find({}, { sort: { date: -1 } }).fetch()
 }
