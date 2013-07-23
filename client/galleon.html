@@ -34,6 +34,8 @@
 		<p>&laquo; <a href="#" class="container-toggle" data-toggle="main-form">Back</a></p>
 	</nav> -->
 
+	<h2>All Data</h2>
+
 	{{#each expenditures}}
 	<li data-id="{{_id}}">
 		{{date}}
@@ -45,6 +47,9 @@
 	{{/each}}
 
 	<br> <br>
+
+	<h2>Data grouped by month</h2>
+
 	{{#groupByMonth expenditures}}
 
 		<em>{{formatDate 'MONTH_YEAR' date}}</em><br>
@@ -54,11 +59,22 @@
 			<strong>{{formatDate 'DATE' date}} {{formatDate 'DAY' date}}</strong><br>
 			Total: {{totalAmount dailyExpenditures}}
 			{{#each dailyExpenditures}}
-				<li>{{value}}</li>
+				<li>{{value}} {{tags}}</li>
 			{{/each}}
 		{{/groupByDay}}
 
 	{{/groupByMonth}}
+
+	<h2>Tags</h2>
+
+	{{#each tagsWithCount}}
+		{{name}}({{count}})
+
+		{{#each findByTag name}}
+			{{value}}
+		{{/each}}
+		<br>
+	{{/each}}
 
 	<!-- <ul id="yearly-details" class="years unstyled">
 		{{#each grouped_data}}

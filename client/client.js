@@ -114,6 +114,42 @@ Template.details.totalAmount = function (data) {
 	}, 0)
 }
 
+Template.details.tagsWithCount = function () {
+
+	// TODO Use data passed in!!!!
+	var data = Expenditures.find().fetch()
+
+	var objectResult = _.countBy(_.flatten(_.map(data, function (item) {
+		return item.tags
+	})))
+
+	// Easy solution that doesn't work with Meteor's current Handlebars
+	// return objectResult
+
+	var result = []
+
+	_.each(objectResult, function (value, key) {
+		result.push({
+			name: key,
+			count: value
+		})
+	})
+
+	return result
+}
+
+Template.details.findByTag = function (tag) {
+
+	// TODO Use data passed in!!!!
+	var data = Expenditures.find().fetch()
+
+	return _.filter(data, function (item) {
+		return _.indexOf(item.tags, tag) !== -1
+	})
+
+
+}
+
 // Group expenditure data by month
 // Returns an array of objects having a 'date' and a list of expenditures
 // for that month
