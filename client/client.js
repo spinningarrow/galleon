@@ -12,13 +12,13 @@ Template.create.events({
 
 	'submit #form-create': function (event, template) {
 
-		var value = template.find('#amount').value
+		var value = +template.find('#amount').value
 		var tags = template.find('#tags').value
 		var date = template.find('#date').value
 
 		if (value && tags) {
 
-			date = (date ? new Date(date) : new Date()).toISOString()
+			date = date ? new Date(date) : new Date()
 			tags = tags.trim().split(/\s+/)
 
 			// Reset values
@@ -57,6 +57,15 @@ Template.create.events({
 //--------------------------------------------------------------------
 // Template: Details
 //--------------------------------------------------------------------
+
+// Date helper
+Template.details.formatDate = function (date) {
+	return new Date(date)/*.toDateString()*/;
+}
+
+Template.details.formatAmount = function (amount, currency) {
+	return amount.toFixed(2) + ' ' + currency
+}
 
 Template.details.data = function () {
 	return Expenditures.find({}, { sort: { date: -1 } }).fetch()

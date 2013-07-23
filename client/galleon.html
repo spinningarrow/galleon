@@ -8,14 +8,14 @@
 
 <template name="home">
 
+	{{loginButtons}}
+
 	{{#if currentUser}}
 		Hello, how are you?
 
 		{{> create}}
 
 		{{> details}}
-	{{else}}
-		{{loginButtons}}
 	{{/if}}
 </template>
 
@@ -36,8 +36,8 @@
 
 	{{#each data}}
 	<li data-id="{{_id}}">
-		{{date}}
-		<strong>{{value}}</strong>
+		{{formatDate date}}
+		<strong>{{formatAmount value currency}}</strong>
 		{{#each tags}}
 			<span class="tag">{{.}}</span>
 		{{/each}}
