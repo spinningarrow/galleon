@@ -6,5 +6,5 @@
 preserve-inputs
 accounts-ui
 accounts-google
-bootstrap
 accounts-password
+stylus
