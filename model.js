@@ -9,8 +9,28 @@ tags: array of strings
 */
 
 Expenditures.allow({
-	insert: function (userId, expenditure) {
+	insert: function () {
 		return false // use createExpenditure method
+	},
+
+	update: function (userId, expenditures, fieldNames) {
+		// // Check that all expenditures to be updated are owned by the
+		// // current user
+		// return _.all(expenditures, function (expenditure) {
+		// 	if (userId !== expenditure.user) {
+		// 		return false // not the owner
+		// 	}
+
+		// 	var allowedFields = ['date', 'value', 'tags']
+		// 	if (_.difference(fieldNames, allowedFields)) {
+		// 		return false // user cannot update some of those fields
+		// 	}
+
+		// 	// TODO do some data validation/conversion here
+		// 	return true
+		// })
+
+		return expenditures.user === userId
 	}
 })
 
