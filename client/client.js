@@ -67,7 +67,7 @@ Template.details.formatAmount = function (amount, currency) {
 	return amount.toFixed(2) + ' ' + currency
 }
 
-Template.details.dataByMonth = function (context, options) {
+Template.details.groupByMonth = function (context, options) {
 	// context - array of all expenditure data
 
 	var ret = ''
@@ -80,7 +80,7 @@ Template.details.dataByMonth = function (context, options) {
 	_.each(groupedData, function (value, key) {
 		result.push({
 			date: new Date(key),
-			expenditures: value
+			monthlyExpenditures: value
 		})
 	})
 
@@ -91,7 +91,7 @@ Template.details.dataByMonth = function (context, options) {
 	return ret
 }
 
-Template.details.dataByDay = function (context, options) {
+Template.details.groupByDay = function (context, options) {
 	// context - array of expenditure data (could be all exp, exp for a month, etc)
 
 	var ret = ''
@@ -104,7 +104,7 @@ Template.details.dataByDay = function (context, options) {
 	_.each(groupedData, function (value, key) {
 		result.push({
 			date: new Date(key),
-			expenditures: value
+			dailyExpenditures: value
 		})
 	})
 
@@ -113,6 +113,10 @@ Template.details.dataByDay = function (context, options) {
 	})
 
 	return ret
+}
+
+Template.details.expenditures = function () {
+	return Expenditures.find({}, { sort: { date: -1 } }).fetch()
 }
 
 Template.details.data = function () {
