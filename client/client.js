@@ -99,6 +99,9 @@ Template.details.formatDate = function (format, date) {
 
 		case 'DATE':
 			return date.getDate()
+
+		case 'INPUT_DATE':
+			return date.toISOString().split('T')[0]
 	}
 }
 
@@ -218,5 +221,27 @@ Template.details.events({
 
 	'keyup #tag-search': function (event, template) {
 		Session.set('tagSearchQuery', template.find('#tag-search').value)
+	},
+
+	'click .expenditure-item-display': function (event, template) {
+		var displayElement = template.find('#' + this._id + ' .expenditure-item-display')
+		var editElement = template.find('#' + this._id + ' .expenditure-item-edit')
+
+		displayElement.className += ' hidden'
+
+		// Twirly 'removeClass' implementation
+		editElement.className = _.without(editElement.className.split(' '), 'hidden').join(' ')
+	},
+
+	'submit .expenditure-item-edit-form': function (event, template) {
+		var displayElement = template.find('#' + this._id + ' .expenditure-item-display')
+		var editElement = template.find('#' + this._id + ' .expenditure-item-edit')
+
+		editElement.className += ' hidden'
+
+		// Twirly 'removeClass' implementation
+		displayElement.className = _.without(displayElement.className.split(' '), 'hidden').join(' ')
+
+		return false
 	}
 })

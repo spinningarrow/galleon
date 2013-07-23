@@ -28,7 +28,7 @@
 
 			<ul>
 			{{#groupByDay monthlyExpenditures}}
-				<li class="expenditure-item">
+				<li class="expenditure-group-day">
 					<h3 class="expenditure-date">
 						{{formatDate 'DATE' date}}
 						<i>{{formatDate 'DAY' date}}</i>
@@ -37,11 +37,24 @@
 
 					<ul>
 					{{#each dailyExpenditures}}
-						<li>
-							{{#each tags}}
-								<span class="expenditure-tag">{{this}}</span>
-							{{/each}}
-							<span class="expenditure-amount">{{formatAmount value currency}}</span>
+						<li class="expenditure-item" id="{{_id}}">
+							<div class="expenditure-item-display" data-id="{{_id}}">
+								{{#each tags}}
+									<span class="expenditure-tag">{{this}}</span>
+								{{/each}}
+								<span class="expenditure-amount">{{formatAmount value currency}}</span>
+							</div>
+
+							<div class="expenditure-item-edit hidden" data-id="{{_id}}">
+								<form class="expenditure-item-edit-form">
+									<input type="date" class="expenditure-item-edit-date" value="{{formatDate 'INPUT_DATE' date}}">
+									<input type="text" class="expenditure-item-edit-value" value="{{value}}">
+									<input type="text" class="expenditure-item-edit-tags" value="{{tags}}">
+
+									<button type="submit">✓</button>
+									<button type="reset">×</button>
+								</form>
+							</div>
 						</li>
 					{{/each}}
 					</ul>
