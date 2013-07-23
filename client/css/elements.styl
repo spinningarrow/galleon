@@ -23,6 +23,8 @@
 .template-details-header
 	h1
 		display inline-block
+		font-size 2em
+		margin 0
 
 	input
 		display inline-block
@@ -35,7 +37,10 @@
 	&:hover
 		background-color #fcfcfc
 
-.expenditure-item-display:hover:before
+.expenditure-item-display
+	cursor pointer
+
+	&:hover:before
 		color gray
 		content '✎'
 		display inline-block
