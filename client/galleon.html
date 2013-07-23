@@ -11,8 +11,6 @@
 	{{loginButtons}}
 
 	{{#if currentUser}}
-		Hello, how are you?
-
 		{{> create}}
 
 		{{> details}}
@@ -21,19 +19,14 @@
 
 <template name="create">
 	<form id="form-create">
-		<input type="date" class="" id="date" value="{{todayDate}}">
-		<input type="number" class="" id="amount" placeholder="amount" autofocus>
-		<input type="text" class="" id="tags" placeholder="tags (space-separated)">
-
+		<input type="date" id="date" value="{{todayDate}}">
+		<input type="number" id="amount" placeholder="amount" autofocus>
+		<input type="text" id="tags" placeholder="tags (space-separated)">
 		<button type="submit" class="btn">Submit</button>
 	</form>
 </template>
 
 <template name="details">
-	<!-- <nav>
-		<p>&laquo; <a href="#" class="container-toggle" data-toggle="main-form">Back</a></p>
-	</nav> -->
-
 	<h2>All Data</h2>
 
 	{{#each expenditures}}
@@ -46,24 +39,36 @@
 	</li>
 	{{/each}}
 
-	<br> <br>
+	<h2>Details</h2>
 
-	<h2>Data grouped by month</h2>
+	<p>Total {{totalAmount expenditures}} (all time)</p>
 
+	<ul>
 	{{#groupByMonth expenditures}}
+		<li>
+			<h2>{{formatDate 'MONTH_YEAR' date}} {{totalAmount monthlyExpenditures}}</h2>
 
-		<em>{{formatDate 'MONTH_YEAR' date}}</em><br>
-		Total: {{totalAmount monthlyExpenditures}}<br>
+			<ul>
+			{{#groupByDay monthlyExpenditures}}
+				<li>
+					<h3>{{formatDate 'DATE' date}} {{formatDate 'DAY' date}} {{totalAmount dailyExpenditures}}</h3>
 
-		{{#groupByDay monthlyExpenditures}}
-			<strong>{{formatDate 'DATE' date}} {{formatDate 'DAY' date}}</strong><br>
-			Total: {{totalAmount dailyExpenditures}}
-			{{#each dailyExpenditures}}
-				<li>{{value}} {{tags}}</li>
-			{{/each}}
-		{{/groupByDay}}
-
+					<ul>
+					{{#each dailyExpenditures}}
+						<li>
+							{{formatAmount value currency}}
+							{{#each tags}}
+								<span>{{this}}</span>
+							{{/each}}
+						</li>
+					{{/each}}
+					</ul>
+				</li>
+			{{/groupByDay}}
+			</ul>
+		</li>
 	{{/groupByMonth}}
+	</ul>
 
 	<h2>Tags</h2>
 
@@ -81,42 +86,7 @@
 	<input type="submit" id="submit-tag-search" value="Search!">
 	<br><br>
 	<!-- This does not work: {totalAmount findBytag tagSearchQuery} -->
-	{{#each findByTag tagSearchQuery}}
-		{{formatDate 'DATE' date}}: {{value}} | {{tags}}<br>
-	{{/each}}
-
-	<!-- <ul id="yearly-details" class="years unstyled">
-		{{#each grouped_data}}
-		<li>
-			<h1>{{year}}</h1>
-			<ul class="months unstyled">
-				{{#each data}}
-				<li>
-					<h2>{{month}} <small>/ ${{monthly_total}}</small></h2>
-					<ul class="days unstyled">
-						{{#each data}}
-						<li class="day-title">
-							<hgroup>
-								<h3 class="date">{{display_date}} <i>{{display_day}}</i></h3>
-								<h4 class="day-total">${{total}}</h4>
-							</hgroup>
-							<ul class="items unstyled">
-								{{#each data}}
-								<li data-id="{{_id}}">
-									$<strong>{{display_amount}}</strong>
-									{{#each tags}}
-										<span class="tag">{{.}}</span>
-									{{/each}}
-								</li>
-								{{/each}}
-							</ul>
-						</li>
-						{{/each}}
-					</ul>
-				</li>
-				{{/each}}
-			</ul>
-		</li>
-		{{/each}}
-	</ul> -->
+	{{#groupByMonth findByTag tagSearchQuery}}
+		<li>{{formatDate 'MONTH_YEAR' date}}: {{totalAmount monthlyExpenditures}}</li>
+	{{/groupByMonth}}
 </template>
