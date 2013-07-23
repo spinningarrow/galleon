@@ -1,6 +1,5 @@
 Expenditures = new Meteor.Collection("expenditures");
 
-
 /*
 user: user id (owner)
 date: datetime
@@ -9,7 +8,11 @@ currency: string (3 letter code)
 tags: array of strings
 */
 
-// Expenditures.allow({})
+Expenditures.allow({
+	insert: function (userId, expenditure) {
+		return false // use createExpenditure method
+	}
+})
 
 Meteor.methods({
 
