@@ -39,9 +39,11 @@
 					{{#each dailyExpenditures}}
 						<li class="expenditure-item" id="{{_id}}">
 							<div class="expenditure-item-display" data-id="{{_id}}">
-								{{#each tags}}
-									<span class="expenditure-tag">{{this}}</span>
-								{{/each}}
+								<div class="expenditure-item-display-tags">
+									{{#each tags}}
+										<span class="expenditure-tag">{{this}}</span>
+									{{/each}}
+								</div>
 								<span class="expenditure-amount">{{formatAmount value currency}}</span>
 							</div>
 

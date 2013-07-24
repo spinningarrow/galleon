@@ -51,13 +51,22 @@
 
 .expenditure-item-display
 	cursor pointer
+	opacity 0.8
 
-	&:hover:before
-		color gray
-		content '✎'
-		display inline-block
-		margin-left -1em
-		width 1em
+	&:hover
+		opacity 1
+
+		&:before
+			color gray
+			content '✎'
+			display inline-block
+			margin-left -1em
+			vertical-align top
+			width 1em
+
+.expenditure-item-display-tags
+	display inline-block
+	max-width 70%
 
 .expenditure-item-edit
 	font-size 0.7em
