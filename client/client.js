@@ -6,7 +6,12 @@ Meteor.subscribe('expenditures')
 
 // Temporary hack in place of actual router-based logic
 Template.index.events({
-	'click .show-create': function (event, template) {
+	'click .show-create, click .site-title': function (event, template) {
+		// These sections are only available to signed-in users
+		if (!Meteor.user()) {
+			return
+		}
+
 		template.find('.template-details').className += ' hidden'
 
 		var templateCreateElement = template.find('.template-create')

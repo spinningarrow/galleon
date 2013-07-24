@@ -1,9 +1,11 @@
 <template name="index">
 	<header class="site-header">
-		<h1>Galleon</h1>
+		<h1 class="site-title">Galleon</h1>
 		<nav>
-			<a href="#" class="show-create">Add</a>
-			<a href="#" class="show-details">Details</a>
+			{{#if currentUser}}
+				<a href="#" class="show-create">Add</a>
+				<a href="#" class="show-details">Details</a>
+			{{/if}}
 
 			{{loginButtons align="right"}}
 		</nav>
