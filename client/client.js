@@ -138,13 +138,19 @@ Template.details.tagsWithCount = function () {
 	return result
 }
 
-Template.details.findByTag = function (tag, data) {
-	if (!tag) {
+// Returns data that matches a list of tags
+Template.details.findByTag = function (tags, data) {
+
+	// Convert tags string to array
+	tags = tags && tags.trim().split(/\s+/)
+
+	// No tags specified, don't filter
+	if (!tags || !tags.length) {
 		return data
 	}
 
 	return _.filter(data, function (item) {
-		return _.indexOf(item.tags, tag) !== -1
+		return _.intersection(item.tags, tags).length
 	})
 }
 
