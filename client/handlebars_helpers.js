@@ -47,3 +47,8 @@ Handlebars.registerHelper('formatDate', function (format, date) {
 			return date.toISOString().split('T')[0]
 	}
 })
+
+// Format tags as space-separated list
+Handlebars.registerHelper('formatTags', function (tags) {
+	return tags.join(' ')
+})

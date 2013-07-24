@@ -256,7 +256,7 @@ Template.details.events({
 		// if (value && tags) {
 
 			date = date ? new Date(date) : new Date()
-			tags = tags.trim().split(/\s*,\s*/)
+			tags = tags.trim().split(/\s+/)
 
 			// Reset values
 			// template.find('#amount').value = ''
