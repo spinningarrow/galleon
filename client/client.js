@@ -38,6 +38,10 @@ Template.create.todayDate = function () {
 	return new Date().toISOString().split("T")[0]; // looks hacky, but works so whatever
 }
 
+Template.create.lastInsertedExpenditure = function () {
+	return Session.get('lastInsertedExpenditure')
+}
+
 Template.create.events({
 
 	'submit #form-create': function (event, template) {
@@ -61,13 +65,22 @@ Template.create.events({
 				value: value,
 				currency: 'SGD',
 				tags: tags
-			}/*, function (error, expenditure) {
-
+			}, function (error, insertedId) {
 				if (!error) {
-					// Session.set('lastDate', date)
-				}
-			}*/)
+					Session.set('lastInsertedExpenditure', Expenditures.findOne({
+						_id: insertedId
+					}))
 
+					// Remove after 10 seconds
+					window.setTimeout(function () {
+						if (Session.get('lastInsertedExpenditure')._id === insertedId) {
+							Session.set('lastInsertedExpenditure', null)
+						}
+					}, 10000)
+				}/* else {
+					Session.set('lastInsertedExpenditure', 'An error occurred.')
+				}*/
+			})
 		}
 
 		/*else {

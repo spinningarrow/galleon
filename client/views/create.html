@@ -5,4 +5,15 @@
 		<input type="text" id="tags" placeholder="tags (space-separated)">
 		<button type="submit" class="btn">Submit</button>
 	</form>
+
+
+	<p class="template-create-last-insert">
+		{{#if lastInsertedExpenditure}}
+			<strong>Added</strong>:
+			<em>{{formatAmount lastInsertedExpenditure.value lastInsertedExpenditure.currency}}</em>
+			spent on
+			<em>{{formatDate 'DATE_MONTH_YEAR' lastInsertedExpenditure.date}}</em>
+			(tagged: <em>{{lastInsertedExpenditure.tags}}</em>).
+		{{/if}}
+	</p>
 </template>
