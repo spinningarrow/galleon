@@ -50,7 +50,7 @@ Template.create.events({
 		var tags = template.find('#tags').value
 		var date = template.find('#date').value
 
-		var value = +amount[0]
+		var value = +amount[0] || 0
 		var currency = amount[1] && amount[1].length === 3 ? amount[1] : 'SGD'
 
 		if (value && tags) {
@@ -275,7 +275,7 @@ Template.details.events({
 
 		// Get form values
 		var date = template.find('#' + this._id + ' .expenditure-item-edit-date').value
-		var value = +template.find('#' + this._id + ' .expenditure-item-edit-value').value
+		var value = +template.find('#' + this._id + ' .expenditure-item-edit-value').value || 0
 		var tags = template.find('#' + this._id + ' .expenditure-item-edit-tags').value
 
 		// if (value && tags) {
