@@ -228,9 +228,10 @@ Template.details.events({
 		Session.set('tagSearchQuery', template.find('#tag-search').value)
 	},
 
-	'click .expenditure-item-display': function (event, template) {
-		var displayElement = template.find('#' + this._id + ' .expenditure-item-display')
-		var editElement = template.find('#' + this._id + ' .expenditure-item-edit')
+	'click .expenditure-date': function(event) {
+		$(event.currentTarget).next('.expenditure-day-list')
+			.toggleClass('hidden')
+	},
 
 	'click .expenditure-item-display': function (event) {
 		// Hide all open edit elements in the current day list
