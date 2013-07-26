@@ -31,6 +31,10 @@ Expenditures.allow({
 		// })
 
 		return expenditures.user === userId
+	},
+
+	remove: function (userId, expenditure) {
+		return expenditure.user === userId
 	}
 })
 

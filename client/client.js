@@ -232,10 +232,25 @@ Template.details.events({
 		var displayElement = template.find('#' + this._id + ' .expenditure-item-display')
 		var editElement = template.find('#' + this._id + ' .expenditure-item-edit')
 
-		displayElement.className += ' hidden'
+	'click .expenditure-item-display': function (event) {
+		// Hide all open edit elements in the current day list
+		// (doesn't look okay because consecutive open edit elements
+		// overlap)
+		$(event.currentTarget).parents('.expenditure-day-list')
+			.find('.expenditure-item-display').removeClass('hidden').end()
+			.find('.expenditure-item-edit').addClass('hidden')
 
-		// Twirly 'removeClass' implementation
-		editElement.className = _.without(editElement.className.split(' '), 'hidden').join(' ')
+		// Hide current display element
+		$('#' + this._id + ' .expenditure-item-display').addClass('hidden')
+
+		// Show current edit element
+		$('#' + this._id + ' .expenditure-item-edit').removeClass('hidden')
+	},
+
+	'click .expenditure-item-delete': function () {
+		confirm('Are you sure you want to delete this item (cannot be undone)?') &&	Expenditures.remove({ _id: this._id })
+
+		return false
 	},
 
 	'reset .expenditure-item-edit-form': function (event, template) {

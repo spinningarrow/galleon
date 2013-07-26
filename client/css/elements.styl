@@ -49,6 +49,9 @@
 	&:hover
 		background-color #fcfcfc
 
+		.expenditure-item-edit-buttons
+			background-color #fcfcfc
+
 .expenditure-item-display
 	cursor pointer
 	opacity 0.8
@@ -70,15 +73,34 @@
 
 .expenditure-item-edit
 	font-size 0.7em
+	min-height 30px // (height of tags = 30px)
+	position relative
 
-	.expenditure-item-edit-date
-		width 35%
+	input
+		background-color transparent
+		margin-bottom 0
+		margin-left 0.8em
 
-	.expenditure-item-edit-value
-		width 15%
+		&:first-child
+			margin-left 0
 
-	.expenditure-item-edit-tags
-		width 30%
+.expenditure-item-edit-date
+	width 35%
+
+.expenditure-item-edit-value
+	width 15%
+
+.expenditure-item-edit-tags
+	width 40%
+
+.expenditure-item-edit-buttons
+	background-color #fff
+	opacity 0.95
+	padding-top 0.5em
+	position absolute
+	text-align center
+	width 100%
+	z-index 1
 
 .expenditure-date
 	font-size 1em

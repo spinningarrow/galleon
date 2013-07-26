@@ -49,12 +49,15 @@
 
 							<div class="expenditure-item-edit hidden" data-id="{{_id}}">
 								<form class="expenditure-item-edit-form">
+									<input type="text" class="expenditure-item-edit-tags" value="{{formatTags tags}}">
 									<input type="date" class="expenditure-item-edit-date" value="{{formatDate 'INPUT_DATE' date}}">
 									<input type="text" class="expenditure-item-edit-value" value="{{value}}">
-									<input type="text" class="expenditure-item-edit-tags" value="{{formatTags tags}}">
 
-									<button type="submit" title="Save and close">✓</button>
-									<button type="reset" title="Undo and close">×</button>
+									<div class="expenditure-item-edit-buttons">
+										<button type="submit" title="Save and close">Save</button>
+										<button type="reset" title="Undo and close" class="button-text">Close</button>
+										<button title="Delete" class="expenditure-item-delete button-danger">Delete</button>
+									</div>
 								</form>
 							</div>
 						</li>
