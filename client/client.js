@@ -46,9 +46,12 @@ Template.create.events({
 
 	'submit #form-create': function (event, template) {
 
-		var value = +template.find('#amount').value
+		var amount = template.find('#amount').value.split(/\s+/)
 		var tags = template.find('#tags').value
 		var date = template.find('#date').value
+
+		var value = +amount[0]
+		var currency = amount[1] && amount[1].length === 3 ? amount[1] : 'SGD'
 
 		if (value && tags) {
 
@@ -63,7 +66,7 @@ Template.create.events({
 			Meteor.call('createExpenditure', {
 				date: date,
 				value: value,
-				currency: 'SGD',
+				currency: currency.toUpperCase(),
 				tags: tags
 			}, function (error, insertedId) {
 				if (!error) {

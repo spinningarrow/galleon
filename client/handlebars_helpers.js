@@ -1,6 +1,20 @@
 // Helper for formatting amounts (e.g., '10.00 SGD')
-Handlebars.registerHelper('formatAmount', function (amount, currency) {
-	return amount.toFixed(2) + ' ' + currency
+Handlebars.registerHelper('formatAmount', function (value, currency) {
+	var currencySymbols = {
+		'AUD': '$',
+		'GBP': '£',
+		'INR': '₹',
+		'EUR': '€',
+		'SGD': '$',
+		'USD': '$'
+	}
+
+	// escape amount value (just in case)
+	// Handlebars.Utils not in Meteor??
+	var amount = /*Handlebars.Utils.escapeExpression(*/value.toFixed(2)/*)*/
+
+	// return amount.toFixed(2) + ' ' + currency
+	return new Handlebars.SafeString('<i class="currency-symbol">' + (currencySymbols[currency] || currency + ' ') + '</i>' + amount)
 })
 
 // Helper for formatting dates
