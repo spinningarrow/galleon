@@ -35,13 +35,13 @@ Handlebars.registerHelper('formatDate', function (format, date) {
 	]
 
 	var days = [
+		'Sunday',
 		'Monday',
 		'Tuesday',
 		'Wednesday',
 		'Thursday',
 		'Friday',
-		'Saturday',
-		'Sunday'
+		'Saturday'
 	]
 
 	switch (format) {
