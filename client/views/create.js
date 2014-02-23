@@ -39,7 +39,7 @@ Template.create.events({
 		if (value && tags) {
 
 			date = date ? new Date(date) : new Date()
-			tags = tags.trim().split(/\s+/)
+			tags = tags.trim().split(/\s*,\s*/)
 
 			// Reset values
 			template.find('#amount').value = ''
