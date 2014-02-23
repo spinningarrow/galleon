@@ -2,6 +2,21 @@
 // Template: Create
 //--------------------------------------------------------------------
 
+Template.create.rendered = function () {
+	var placeholder = $('#tags').attr('placeholder')
+
+	var tagsArray = _.uniq(_.flatten(_.map(Expenditures.find().fetch(), function (expenditureItem) {
+		return expenditureItem.tags
+	})))
+
+	$('#tags').select2({
+		placeholder: placeholder,
+		width: 'element',
+		tags: tagsArray,
+		tokenSeparators: [',', ' ']
+	})
+}
+
 Template.create.todayDate = function () {
 	return new Date().toISOString().split("T")[0]; // looks hacky, but works so whatever
 }
