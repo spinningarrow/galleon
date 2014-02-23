@@ -73,12 +73,14 @@ Template.details.groupByMonth = function (context, options) {
 	var result = []
 
 	var groupedData = _.groupBy(context, function (item) {
-		return item.date.getFullYear() + '-' + (item.date.getMonth() + 1)
+		return item.date.getFullYear() + '-' + (item.date.getMonth())
 	})
 
 	_.each(groupedData, function (value, key) {
+		var dateComponents = key.split(/-/)
+
 		result.push({
-			date: new Date(key),
+			date: new Date(dateComponents[0], dateComponents[1]),
 			monthlyExpenditures: value
 		})
 	})
