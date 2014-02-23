@@ -1,10 +1,12 @@
-<template name="index">
+<template name="layout">
 	<header class="site-header">
-		<h1 class="site-title">Galleon</h1>
+		<h1 class="site-title">
+			<a href="/">Galleon</a>
+		</h1>
 		<nav>
 			{{#if currentUser}}
-				<a href="#" class="show-create">Add</a>
-				<a href="#" class="show-details">Details</a>
+				<a href="/" class="show-create">Add</a>
+				<a href="/details" class="show-details">Details</a>
 			{{/if}}
 
 			{{loginButtons align="right"}}
@@ -14,11 +16,7 @@
 	<section class="wrapper">
 		{{#if currentUser}}
 			<section class="template-create">
-				{{> create}}
-			</section>
-
-			<section class="template-details hidden">
-				{{> details}}
+				{{yield}}
 			</section>
 		{{else}}
 			<div class="template-index-hero">
